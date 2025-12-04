@@ -97,6 +97,16 @@ const onSubmit = async (data: CadastroFormData) => {
                 placeholder="000.000.000-00"
                 {...register('cpf')}
                 className={errors.cpf ? 'border-destructive' : ''}
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.replace(/\D/g, '');
+                  value = value
+                  .replace(/(\d{3})(\d)/, '$1.$2')
+                  .replace(/(\d{3})(\d)/, '$1.$2')
+                  .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                  e.target.value = value;
+                  register('cpf').onChange(e);
+                }}
               />
               {errors.cpf && (
                 <p className="text-sm text-destructive">{errors.cpf.message}</p>
